@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calorie Tracker</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, Arial, sans-serif;
+      background: #0b0d12;
+      color: #f5f7fa;
+    }
+
+    .app {
+      max-width: 1100px;
+      margin: auto;
+      padding: 32px 20px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 32px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    .date {
+      color: #8e96a3;
+      margin-top: 6px;
+    }
+
+    .card {
+      background: #141820;
+      border: 1px solid #232936;
+      border-radius: 20px;
+      padding: 24px;
+    }
+
+    .dashboard {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 20px;
+    }
+
+    .calories {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .circle {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border: 12px solid #303744;
+      flex-shrink: 0;
+    }
+
+    .circle strong {
+      font-size: 36px;
+    }
+
+    .circle span {
+      color: #8e96a3;
+      font-size: 14px;
+    }
+
+    .remaining {
+      color: #8e96a3;
+      font-size: 15px;
+      margin-top: 8px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .stat {
+      background: #0f1218;
+      border-radius: 14px;
+      padding: 16px;
+    }
+
+    .stat span {
+      display: block;
+      color: #8e96a3;
+      font-size: 13px;
+      margin-bottom: 6px;
+    }
+
+    .stat strong {
+      font-size: 20px;
+    }
+
+    .section {
+      margin-top: 20px;
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .section-title h2 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 12px;
+      padding: 11px 16px;
+      background: #f5f7fa;
+      color: #0b0d12;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    button:hover {
+      opacity: .9;
+    }
+
+    .empty {
+      color: #8e96a3;
+      text-align: center;
+      padding: 35px 10px;
+    }
+
+    .food {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid #232936;
+    }
+
+    .food:last-child {
+      border-bottom: 0;
+    }
+
+    .food-name {
+      font-weight: 600;
+    }
+
+    .food-type {
+      color: #8e96a3;
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    .food-calories {
+      font-weight: 700;
+    }
+
+    .login-box {
+      text-align: center;
+      padding: 70px 20px;
+    }
+
+    .login-box h2 {
+      margin-top: 0;
+    }
+
+    .login-box p {
+      color: #8e96a3;
+      max-width: 500px;
+      margin: 10px auto 25px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 750px) {
+      .dashboard {
+        grid-template-columns: 1fr;
+      }
+
+      .calories {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      header {
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="app">
+
+    <header>
+      <div>
+        <h1>Calorie Tracker</h1>
+        <div class="date" id="today"></div>
+      </div>
+    </header>
+
+    <section class="dashboard">
+
+      <div class="card">
+        <div class="calories">
+
+          <div class="circle">
+            <strong id="caloriesConsumed">0</strong>
+            <span>kcal</span>
+          </div>
+
+          <div>
+            <h2 id="goalText">Objectif : 2 000 kcal</h2>
+            <div class="remaining" id="remaining">
+              2 000 kcal restantes
+            </div>
+          </div>
+
+        </div>
+
+        <div class="stats">
+
+          <div class="stat">
+            <span>Protéines</span>
+            <strong id="protein">0 g</strong>
+          </div>
+
+          <div class="stat">
+            <span>Glucides</span>
+            <strong id="carbs">0 g</strong>
+          </div>
+
+          <div class="stat">
+            <span>Lipides</span>
+            <strong id="fat">0 g</strong>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Ajouter un aliment</h2>
+
+        <p style="color:#8e96a3">
+          La connexion à ton compte et l'enregistrement dans Supabase
+          seront ajoutés dans l'étape suivante.
+        </p>
+
+        <button onclick="alert('Fonctionnalité en cours de création')">
+          + Ajouter
+        </button>
+      </div>
+
+    </section>
+
+    <section class="card section">
+
+      <div class="section-title">
+        <h2>Journal alimentaire</h2>
+        <button onclick="alert('Ajout d’aliment — prochaine étape')">
+          + Ajouter
+        </button>
+      </div>
+
+      <div id="foodList" class="empty">
+        Aucun aliment enregistré aujourd'hui.
+      </div>
+
+    </section>
+
+  </main>
+
+  <script>
+    const today = new Date();
+
+    document.getElementById("today").textContent =
+      today.toLocaleDateString("fr-FR", {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+      });
+  </script>
+
+</body>
+</html>
